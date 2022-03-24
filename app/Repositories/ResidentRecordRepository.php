@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\Repositories\Interfaces\ResidentRecordRepositoryInterface;
 use App\Models\Residents\ResidentRecord as Model;
 
+use App\Http\Resources\ResidentRecordsResource;
+
 class ResidentRecordRepository implements ResidentRecordRepositoryInterface
 {
     protected $model;
@@ -17,7 +19,14 @@ class ResidentRecordRepository implements ResidentRecordRepositoryInterface
 
     public function getAll($query)
     {
+        try
+        {
 
+        }
+        catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 500);
+        }
     }
 
     public function getById($id)
