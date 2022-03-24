@@ -19,6 +19,9 @@ class CreateResidentCertificatesTable extends Migration
             $table->string('type');
             $table->string('status')->default('pending');
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->index(['resident_record_id', 'status']);
         });
     }
 

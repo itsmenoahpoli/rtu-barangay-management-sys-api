@@ -30,6 +30,7 @@ class CreateResidentRecordsTable extends Migration
             $table->string('address_line1');
             $table->string('address_line2')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->index(['ref_code', 'email', 'created_at']);
         });
