@@ -48,4 +48,9 @@ class ResidentRecordRepository implements ResidentRecordRepositoryInterface
     {
 
     }
+
+    private function data_format($resident)
+    {
+
+    }
 }
