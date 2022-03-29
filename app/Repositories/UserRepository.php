@@ -2,15 +2,15 @@
 
 namespace App\Repositories;
 
-use App\Repositories\Interfaces\ResidentRecordRepositoryInterface;
-use App\Models\Residents\ResidentRecord as Model;
+use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Models\User as Model;
 
-use App\Http\Resources\ResidentRecordsResource;
+use App\Http\Resources\UsersResource;
 
-class ResidentRecordRepository implements ResidentRecordRepositoryInterface
+class UserRepository implements UserRepositoryInterface
 {
     protected $model;
-    protected $modelRelationships = ['resident_files'];
+    protected $modelRelationships = ['user_roles'];
 
     public function __construct(Model $model)
     {

@@ -5,16 +5,16 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Repositories\ResidentRecordRepository;
-use App\Http\Requests\Residents\ResidentRecordRequest;
+use App\Repositories\UserRepository;
+use App\Http\Requests\Users\UserRequest;
 
-class ResidentRecordsController extends Controller
+class UsersController extends Controller
 {
-    protected $residentRecordRepository;
+    protected $userRepository;
 
-    public function __construct(ResidentRecordRepository $residentRecordRepository)
+    public function __construct(UserRepository $userRepository)
     {
-        $this->residentRecordRepository = $residentRecordRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -26,7 +26,7 @@ class ResidentRecordsController extends Controller
     {
         $query = $request->query();
 
-        return $this->residentRecordRepository->getAll($query);
+        return $this->userRepository->getAll($query);
     }
 
     /**
@@ -37,7 +37,7 @@ class ResidentRecordsController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->residentRecordRepository->create($request->all());
+        return $this->userRepository->create($request->all());
     }
 
     /**
@@ -48,7 +48,7 @@ class ResidentRecordsController extends Controller
      */
     public function show($id)
     {
-        return $this->residentRecordRepository->getById($id);
+        return $this->userRepository->getById($id);
     }
 
     /**
@@ -60,7 +60,7 @@ class ResidentRecordsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return $this->residentRecordRepository->update($id, $request->all());
+        return $this->userRepository->update($id, $request->all());
     }
 
     /**
@@ -71,6 +71,6 @@ class ResidentRecordsController extends Controller
      */
     public function destroy($id)
     {
-        return $this->residentRecordRepository->deleteById($id);
+        return $this->userRepository->deleteById($id);
     }
 }

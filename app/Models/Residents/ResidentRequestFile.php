@@ -4,14 +4,16 @@ namespace App\Models\Residents;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ResidentCertificates extends Model
+class ResidentRequestFile extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $guarded = [];
 
+    /**
+     * Relationships
+     */
     public function resident_record()
     {
         return $this->belongsTo('App\Models\Residents\ResidentRecord');

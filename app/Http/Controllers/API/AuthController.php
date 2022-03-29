@@ -9,6 +9,8 @@ use Illuminate\Http\JsonResponse;
 use App\Models\User;
 use App\Services\OTPService;
 
+use Auth;
+
 class AuthController extends Controller
 {
     protected $otpService;
@@ -20,9 +22,32 @@ class AuthController extends Controller
 
     public function userAuthenticate(Request $request) : JsonResponse
     {
+        try
+        {
+            $credentials = $request->only('email', 'password');
 
+            if (!Auth::attempt($credentials))
+            {
+                return response()->json('Invalid credentials provided', 401);
+            }
+
+            $user = Auth::user();
+            $authToken = $user->createToken(time().$user->id.'authtoken')->plainTextToken;
+
+            $authenticationData = [
+                'user' => $user,
+                'authToken' => $authToken
+            ];
+
+            return response()->json($authenticationData, 200);
+        }
+        catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 500);
+        }
     }
 
+    // TODO: Create email template for user verification OTP
     public function userVerify(Request $request) : JsonResponse
     {
         try
@@ -41,8 +66,14 @@ class AuthController extends Controller
         }
     }
 
+    public function userVerifyOtp(Request $request) : JsonResponse
+    {
+        //
+    }
+
+    // TODO: Reset user password
     public function userResetPassword(Request $request) : JsonResponse
     {
-
+        //
     }
 }

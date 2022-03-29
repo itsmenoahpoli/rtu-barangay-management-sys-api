@@ -12,8 +12,12 @@ class ResidentRecord extends Model
 
     protected $guarded = [];
 
-    public function resident_certificates()
+    /**
+     * Relationships
+     */
+
+    public function resident_files()
     {
-        return $this->hasMany('App\Models\Residents\ResidentCertificate');
+        return $this->hasMany('App\Models\Residents\ResidentRequestFile');
     }
 }
