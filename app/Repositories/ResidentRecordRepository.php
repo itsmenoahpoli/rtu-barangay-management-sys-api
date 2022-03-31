@@ -10,7 +10,7 @@ use App\Http\Resources\ResidentRecordsResource;
 class ResidentRecordRepository implements ResidentRecordRepositoryInterface
 {
     protected $model;
-    protected $modelRelationships = ['resident_files'];
+    protected $modelRelationships = ['resident_files', 'resident_complaints'];
 
     public function __construct(Model $model)
     {

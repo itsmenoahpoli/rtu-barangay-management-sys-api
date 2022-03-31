@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ComplaintsRecord extends Model
+class ComplaintRecord extends Model
 {
     use HasFactory, SoftDeletes;
 

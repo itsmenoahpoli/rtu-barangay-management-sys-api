@@ -20,4 +20,9 @@ class ResidentRecord extends Model
     {
         return $this->hasMany('App\Models\Residents\ResidentRequestFile');
     }
+
+    public function resident_complaints()
+    {
+        return $this->hasMany('App\Models\Complaints\ComplaintRecord');
+    }
 }

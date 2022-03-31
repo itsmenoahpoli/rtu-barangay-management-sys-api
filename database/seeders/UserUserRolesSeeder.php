@@ -16,17 +16,17 @@ class UserUserRolesSeeder extends Seeder
      */
     public function run()
     {
-        $adminUser = User::find(1)->first();
+        $adminUser = User::find(1);
         $adminUser->user_roles()->attach(
             UserRole::find(1)
         );
 
-        $employeeUser = User::find(2)->first();
+        $employeeUser = User::find(2);
         $employeeUser->user_roles()->attach(
             UserRole::find(2)
         );
 
-        $personnelUser = User::find(3)->first();
+        $personnelUser = User::find(3);
         $personnelUser->user_roles()->attach(
             UserRole::find(3)
         );
