@@ -13,6 +13,20 @@ class ResidentRecord extends Model
     protected $guarded = [];
 
     /**
+     * Scopes
+     */
+    public function scopeSearch($query, $q)
+    {
+        return $query->where('first_name', 'LIKE', "%$q%")
+        ->orWhere('middle_name', 'LIKE', "%$q%")
+        ->orWhere('last_name', 'LIKE', "%$q%")
+        ->orWhere('email', 'LIKE', "%$q%")
+        ->orWhere('landline', 'LIKE', "%$q%")
+        ->orWhere('mobile_number', 'LIKE', "%$q%")
+        ->where('ref_code', 'LIKE', "%$q%");
+    }
+
+    /**
      * Relationships
      */
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 use App\Repositories\ResidentRecordRepository;
 use App\Http\Requests\Residents\ResidentRecordRequest;
@@ -22,11 +23,11 @@ class ResidentRecordsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request) : JsonResponse
     {
         $query = $request->query();
 
-        return $this->residentRecordRepository->getAll($query);
+        return response()->json($this->residentRecordRepository->getAll($query));
     }
 
     /**
@@ -35,9 +36,9 @@ class ResidentRecordsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ResidentRecordRequest $request) : JsonResponse
     {
-        return $this->residentRecordRepository->create($request->all());
+        return response()->json($this->residentRecordRepository->create($request->all()));
     }
 
     /**
@@ -46,9 +47,9 @@ class ResidentRecordsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id) : JsonResponse
     {
-        return $this->residentRecordRepository->getById($id);
+        return response()->json($this->residentRecordRepository->getById($id));
     }
 
     /**
@@ -58,9 +59,9 @@ class ResidentRecordsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id) : JsonResponse
     {
-        return $this->residentRecordRepository->update($id, $request->all());
+        return response()->json($this->residentRecordRepository->update($id, $request->all()));
     }
 
     /**
@@ -69,8 +70,8 @@ class ResidentRecordsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id) : JsonResponse
     {
-        return $this->residentRecordRepository->deleteById($id);
+        return response()->json($this->residentRecordRepository->deleteById($id));
     }
 }

@@ -7,6 +7,8 @@ use App\Models\Residents\ResidentRecord as Model;
 
 use App\Http\Resources\ResidentRecordsResource;
 
+use Str;
+
 class ResidentRecordRepository implements ResidentRecordRepositoryInterface
 {
     protected $model;
@@ -22,11 +24,21 @@ class ResidentRecordRepository implements ResidentRecordRepositoryInterface
         return $this->model->with($this->modelRelationships);
     }
 
+    public function generateResidentRefCode()
+    {
+        return strtoupper('RESIDENT--'.Str::random(10));
+    }
+
     public function getAll($query)
     {
         try
         {
-            return $this->baseModel()->get();
+            $search = $query['q'];
+
+
+            return $this->baseModel()
+            ->search($search)
+            ->orderBy('id', 'DESC')->get();
         }
         catch (Exception $e)
         {
@@ -50,6 +62,8 @@ class ResidentRecordRepository implements ResidentRecordRepositoryInterface
     {
         try
         {
+            $payload['ref_code'] = $this->generateResidentRefCode();
+
             return $this->baseModel()->create($payload);
         }
         catch (Exception $e)

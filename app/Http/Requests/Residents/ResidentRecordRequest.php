@@ -13,7 +13,7 @@ class ResidentRecordRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,18 @@ class ResidentRecordRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        switch($this->method())
+        {
+            case 'GET':
+            case 'DELETE':
+                return [];
+            case 'POST':
+                return [
+                    'first_name' => 'required|string',
+                    'middle_name' => 'string',
+                    'last_name' => 'required|string',
+                    'email' => 'required|email|unique:resident_records',
+                ];
+        }
     }
 }
