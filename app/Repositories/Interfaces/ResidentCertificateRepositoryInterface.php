@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Interfaces;
 
-interface ResidentRequestFileRepositoryInterface
+interface ResidentCertificateRepositoryInterface
 {
     public function getAll($query);
 

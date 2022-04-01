@@ -30,9 +30,9 @@ class ResidentRecord extends Model
      * Relationships
      */
 
-    public function resident_files()
+    public function resident_certificates()
     {
-        return $this->hasMany('App\Models\Residents\ResidentRequestFile');
+        return $this->hasMany('App\Models\Residents\ResidentCertificate');
     }
 
     public function resident_complaints()

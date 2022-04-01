@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
  */
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\UsersController;
-use App\Http\Controllers\API\ResidentFileRequestsController;
+use App\Http\Controllers\API\ResidentCertificatesController;
 use App\Http\Controllers\API\ResidentRecordsController;
 
 
@@ -17,9 +17,9 @@ Route::group(['prefix' => 'v1'], function() {
         Route::post('user-verify', [AuthController::class, 'userVerify'])->name('api.auth.user-verify');
     });
 
-    Route::apiResource('resident-file-requests', ResidentFileRequestsController::class)->except('update');
     Route::apiResources([
         'users' => UsersController::class,
         'resident-records' => ResidentRecordsController::class,
+        'resident-certificates' => ResidentCertificatesController::class,
     ]);
 });

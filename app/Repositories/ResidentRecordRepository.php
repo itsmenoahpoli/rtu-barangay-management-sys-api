@@ -8,11 +8,12 @@ use App\Models\Residents\ResidentRecord as Model;
 use App\Http\Resources\ResidentRecordsResource;
 
 use Str;
+use Arr;
 
 class ResidentRecordRepository implements ResidentRecordRepositoryInterface
 {
     protected $model;
-    protected $modelRelationships = ['resident_files', 'resident_complaints'];
+    protected $modelRelationships = ['resident_certificates', 'resident_complaints'];
 
     public function __construct(Model $model)
     {
@@ -33,7 +34,7 @@ class ResidentRecordRepository implements ResidentRecordRepositoryInterface
     {
         try
         {
-            $search = $query['q'];
+            $search = Arr::exists($query, 'q') ? $query['q'] : '';
 
 
             return $this->baseModel()

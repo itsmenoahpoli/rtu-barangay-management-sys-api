@@ -2,15 +2,15 @@
 
 namespace App\Repositories;
 
-use App\Repositories\Interfaces\ResidentRequestFileRepositoryInterface;
-use App\Models\Residents\ResidentRequestFile as Model;
+use App\Repositories\Interfaces\ResidentCertificateRepositoryInterface;
+use App\Models\Residents\ResidentCertificate as Model;
 
 use App\Http\Resources\ResidentRequestrFileResource;
 
-class ResidentRequestFileRepository implements ResidentRequestFileRepositoryInterface
+class ResidentCertificateRepository implements ResidentCertificateRepositoryInterface
 {
     protected $model;
-    protected $modelRelationships = ['resident_record'];
+    protected $modelRelationships = ['resident'];
 
     public function __construct(Model $model)
     {

@@ -6,25 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
-use App\Http\Controllers\PDFController;
-use App\Repositories\ResidentRecordRepository;
-use App\Repositories\ResidentRequestFileRepository;
+use App\Repositories\ResidentCertificateRepository;
 
-class ResidentFileRequestsController extends Controller
+class ResidentCertificatesController extends Controller
 {
     protected $pdfController;
     protected $residentRecordRepository;
-    protected $residentRequestFileRepository;
+    protected $residentCertificateRepository;
 
     public function __construct(
-        PDFController $pdfController,
-        ResidentRecordRepository $residentRecordRepository,
-        ResidentRequestFileRepository $residentRequestFileRepository
+        ResidentCertificateRepository $residentCertificateRepository
     )
     {
-        $this->pdfController = $pdfController;
-        $this->residentRecordRepository = $residentRecordRepository;
-        $this->residentRequestFileRepository = $residentRequestFileRepository;
+        $this->residentCertificateRepository = $residentCertificateRepository;
     }
 
     /**
@@ -32,9 +26,11 @@ class ResidentFileRequestsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() : JsonResponse
+    public function index(Request $request) : JsonResponse
     {
-        //
+        $query = $request->query();
+
+        return response()->json($this->residentCertificateRepository->getAll($query));
     }
 
     /**
@@ -45,21 +41,8 @@ class ResidentFileRequestsController extends Controller
      */
     public function store(Request $request) : JsonResponse
     {
-        $generatedPdfFile = $this->pdfController->generatePdf([
-            'type' => $request->type,
-            'resident' => $this->residentRecordRepository->getById($request->resident_id)
-        ]);
-
-        // return response()->json($generatedPdfFile);
-
-        $residentFileRequest = $this->residentRequestFileRepository->create([
-            'resident_record_id' => $request->resident_id,
-            'type' => $request->type,
-            'file_directory' => $generatedPdfFile['file_directory']
-        ]);
-
         return response()->json(
-            $residentFileRequest,
+            'Uploaded',
             200
         );
     }
