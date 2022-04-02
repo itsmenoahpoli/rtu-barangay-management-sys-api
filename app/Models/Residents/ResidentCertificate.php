@@ -14,7 +14,7 @@ class ResidentCertificate extends Model
     /**
      * Relationships
      */
-    public function resident()
+    public function resident_record()
     {
         return $this->belongsTo('App\Models\Residents\ResidentRecord');
     }

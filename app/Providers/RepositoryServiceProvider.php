@@ -7,8 +7,12 @@ use Illuminate\Support\ServiceProvider;
 use App\Repositories\ResidentRecordRepository;
 use App\Repositories\Interfaces\ResidentRecordRepositoryInterface;
 
-use App\Repositories\ResidentRequestFileRepository;
-use App\Repositories\Interfaces\ResidentRequestFileRepositoryInterface;
+use App\Repositories\ResidentCertificateRepository;
+use App\Repositories\Interfaces\ResidentCertificateRepositoryInterface;
+
+use App\Repositories\ComplaintRecordRepository;
+use App\Repositories\Interfaces\ComplaintRecordRepositoryInterface;
+
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -34,8 +38,12 @@ class RepositoryServiceProvider extends ServiceProvider
             ResidentRecordRepository::class
         );
         $this->app->bind(
-            ResidentRequestFileRepositoryInterface::class,
-            ResidentRequestFileRepository::class
+            ResidentCertificateRepositoryInterface::class,
+            ResidentCertificateRepository::class
+        );
+        $this->app->bind(
+            ComplaintRecordRepositoryInterface::class,
+            ComplaintRecordRepository::class
         );
     }
 }

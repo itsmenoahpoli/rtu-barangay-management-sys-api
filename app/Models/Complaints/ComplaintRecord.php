@@ -12,7 +12,7 @@ class ComplaintRecord extends Model
 
     protected $guarded = [];
 
-    public function resident()
+    public function resident_record()
     {
         return $this->belongsTo('App\Models\Residents\ResidentRecord');
     }

@@ -4,17 +4,24 @@ namespace App\Repositories;
 
 use App\Repositories\Interfaces\ResidentCertificateRepositoryInterface;
 use App\Models\Residents\ResidentCertificate as Model;
+use App\Repositories\ResidentRecordRepository;
 
-use App\Http\Resources\ResidentRequestrFileResource;
+use Carbon\Carbon;
+use Mail;
 
 class ResidentCertificateRepository implements ResidentCertificateRepositoryInterface
 {
     protected $model;
-    protected $modelRelationships = ['resident'];
+    protected $modelRelationships = ['resident_record'];
+    protected $residentRecordRepository;
 
-    public function __construct(Model $model)
+    public function __construct(
+        Model $model,
+    ResidentRecordRepository $residentRecordRepository
+    )
     {
         $this->model = $model;
+        $this->residentRecordRepository = $residentRecordRepository;
     }
 
     public function baseModel()
@@ -26,7 +33,8 @@ class ResidentCertificateRepository implements ResidentCertificateRepositoryInte
     {
         try
         {
-            return $this->baseModel()->get();
+            return $this->baseModel()
+            ->orderBy('id', 'DESC')->get();
         }
         catch (Exception $e)
         {
@@ -46,11 +54,31 @@ class ResidentCertificateRepository implements ResidentCertificateRepositoryInte
         }
     }
 
-    public function create($payload)
+    public function create($payload, $pdfFile)
     {
         try
         {
-            return $this->baseModel()->create($payload);
+            $fileYear = Carbon::now()->year;
+            $filename = $fileYear.'-'.$pdfFile->getClientOriginalName();
+            $certificatePdfFilesDir = '/files/pdfs/certificates';
+            $pdfFile->move(public_path($certificatePdfFilesDir), $filename);
+            $uploadedFileDir = env('APP_URL').$certificatePdfFilesDir.'/'.$filename;
+
+            $resident = $this->residentRecordRepository->getById($payload['resident_record_id']);
+            $residentName = $resident->first_name.' '.$resident->last_name;
+
+            Mail::raw("Good day, {$residentName} your certificate for {$payload['type']} been created and ready for pick-up", function($message) use($resident) {
+                $message->from('pitogo-portal@no-reply.com', 'BRGY.PITOGO PORTAL SYSTEM');
+                $message->subject('BRGY.PITOGO - CERTIFICATE READY FOR PICK-UP');
+                $message->to($resident->email);
+            });
+
+            return $this->baseModel()->create([
+                'resident_record_id' => $payload['resident_record_id'],
+                'purpose' => $payload['purpose'],
+                'type' => $payload['type'],
+                'file_directory' => $uploadedFileDir,
+            ]);
         }
         catch (Exception $e)
         {

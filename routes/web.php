@@ -14,15 +14,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test-pdf', function() {
-    $resident = ResidentRecord::first();
+Route::get('cert-mail', function() {
+    $mail = new App\Mail\Residents\CertificateStatus;
 
-    $pdf = PDF::loadView(
-        'pdfs.certificates.barangay-certificate',
-        [
-            'resident' => $resident
-        ]
-    );
-
-    return $pdf->download('brgycertificate.pdf');
+    return $mail;
 });

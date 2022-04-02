@@ -41,10 +41,7 @@ class ResidentCertificatesController extends Controller
      */
     public function store(Request $request) : JsonResponse
     {
-        return response()->json(
-            'Uploaded',
-            200
-        );
+        return response()->json($this->residentCertificateRepository->create($request->all(), $request->file('certificate_pdf_file')));
     }
 
     /**

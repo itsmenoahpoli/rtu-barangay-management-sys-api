@@ -32,11 +32,11 @@ class ResidentRecord extends Model
 
     public function resident_certificates()
     {
-        return $this->hasMany('App\Models\Residents\ResidentCertificate');
+        return $this->hasMany('App\Models\Residents\ResidentCertificate')->orderBy('created_at', 'desc');
     }
 
     public function resident_complaints()
     {
-        return $this->hasMany('App\Models\Complaints\ComplaintRecord');
+        return $this->hasMany('App\Models\Complaints\ComplaintRecord')->orderBy('created_at', 'desc');
     }
 }
