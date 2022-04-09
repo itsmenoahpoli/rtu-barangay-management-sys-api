@@ -47,33 +47,15 @@ class AuthController extends Controller
         }
     }
 
-    // TODO: Create email template for user verification OTP
-    public function userVerify(Request $request) : JsonResponse
+    public function userLogout(Request $request)
     {
         try
         {
-            $user = User::whereEmail($request->email)->first();
-            $otp = $this->otpService->generateOtp($user->id);
 
-            $verification_data = [
-                'verification_mail' => 'sent'
-            ];
-
-            return response()->json($verification_data, 200);
-        } catch (Exception $e)
-        {
-            throw response()->json($e->getMessage(), 500);
         }
-    }
-
-    public function userVerifyOtp(Request $request) : JsonResponse
-    {
-        //
-    }
-
-    // TODO: Reset user password
-    public function userResetPassword(Request $request) : JsonResponse
-    {
-        //
+        catch (Exception $e)
+        {
+            return response()->json($e->getMessage(), 500);
+        }
     }
 }

@@ -15,7 +15,6 @@ use App\Http\Controllers\API\ComplaintRecordsController;
 Route::group(['prefix' => 'v1'], function() {
     Route::group(['prefix' => 'auth'], function() {
         Route::post('login', [AuthController::class, 'userAuthenticate'])->name('api.auth.user-authenticate');
-        Route::post('user-verify', [AuthController::class, 'userVerify'])->name('api.auth.user-verify');
     });
 
     Route::apiResources([

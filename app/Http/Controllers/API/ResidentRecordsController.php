@@ -61,7 +61,7 @@ class ResidentRecordsController extends Controller
      */
     public function update(Request $request, $id) : JsonResponse
     {
-        return response()->json($this->residentRecordRepository->update($id, $request->all()));
+        return response()->json($this->residentRecordRepository->updateById($id, $request->all()));
     }
 
     /**

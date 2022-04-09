@@ -64,14 +64,7 @@ class ResidentCertificateRepository implements ResidentCertificateRepositoryInte
             $pdfFile->move(public_path($certificatePdfFilesDir), $filename);
             $uploadedFileDir = env('APP_URL').$certificatePdfFilesDir.'/'.$filename;
 
-            $resident = $this->residentRecordRepository->getById($payload['resident_record_id']);
-            $residentName = $resident->first_name.' '.$resident->last_name;
 
-            Mail::raw("Good day, {$residentName} your certificate for {$payload['type']} been created and ready for pick-up", function($message) use($resident) {
-                $message->from('pitogo-portal@no-reply.com', 'BRGY.PITOGO PORTAL SYSTEM');
-                $message->subject('BRGY.PITOGO - CERTIFICATE READY FOR PICK-UP');
-                $message->to($resident->email);
-            });
 
             return $this->baseModel()->create([
                 'resident_record_id' => $payload['resident_record_id'],
@@ -90,6 +83,15 @@ class ResidentCertificateRepository implements ResidentCertificateRepositoryInte
     {
         try
         {
+            // $resident = $this->residentRecordRepository->getById($payload['resident_record_id']);
+            // $residentName = $resident->first_name.' '.$resident->last_name;
+
+            // Mail::raw("Good day, {$residentName} your certificate for {$payload['type']} been created and ready for pick-up", function($message) use($resident) {
+            //     $message->from('pitogo-portal@no-reply.com', 'BRGY.PITOGO PORTAL SYSTEM');
+            //     $message->subject('BRGY.PITOGO - CERTIFICATE READY FOR PICK-UP');
+            //     $message->to($resident->email);
+            // });
+
             return $this->baseModel()->findOrFail($id)->update($payload);
         }
         catch (Exception $e)
